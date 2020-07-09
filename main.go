@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type jsonArray struct {
@@ -19,9 +20,13 @@ type jsonArray struct {
 	 Type string `json: "type"`
 	 Step int `json: "step"`
 }
-
 func main() {
 	wholeArray = make([]*jsonArray,0)
+
+}
+func getdata() jsonArray {
+	var js jsonArray
+
 	fileobj, err := os.Open("./urls.txt")
 	if err != nil {
 		panic(err)
@@ -30,7 +35,7 @@ func main() {
 	scanner := bufio.NewScanner(fileobj)
 
 	for scanner.Scan() {
-		var js jsonArray
+
 
 		//判断endpoint
 		ip, err := exec.Command("bash","-c","ifconfig").Output()
@@ -47,6 +52,9 @@ func main() {
 		intstep, _ := strconv.Atoi(step)
 		js.Step = intstep
 
+		//取得timestamp值
+		js.Timestamp = time.Now().Unix()
+
 		x := scanner.Text()
 
 		//判断每一条文本是否以http
@@ -61,8 +69,8 @@ func main() {
 		if err != nil {
 			fmt.Println(err.Error())
 		}
-		fmt.Println(resp.StatusCode)
+		js.Value = resp.StatusCode
 
 	}
-
+	return js
 }
