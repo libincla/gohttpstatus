@@ -1,4 +1,5 @@
 https://www.baidu.com
 https://cn.bing.com
-https://www.sina.com.cn
+https://www.sina.com.cn/
 www.huitongjy.com
+https://www.liwenzhou.com/posts/Go/gin_routes_registry/
